@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Drawdown Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+    }
+
+    .calculator {
+      max-width: 300px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333333;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    .input-group label {
+      display: inline-block;
+      width: 180px;
+      color: #555555;
+    }
+
+    .input-group select,
+    .input-group input[type="number"] {
+      width: 150px;
+      padding: 10px;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: #4caf50;
+      color: #ffffff;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .result {
+      font-weight: bold;
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #dddddd;
+      border-radius: 4px;
+      color: #333333;
+    }
+
+    .result p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>Drawdown Calculator</h2>
+    <div class="input-group">
+      <label>Initial Balance:</label>
+      <select id="initialBalance">
+        <option value="5000">$5,000</option>
+        <option value="10000">$10,000</option>
+        <option value="25000">$25,000</option>
+        <option value="50000">$50,000</option>
+        <option value="100000">$100,000</option>
+        <option value="200000">$200,000</option>
+        <option value="300000">$300,000</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label>Starting Equity of the Day:</label>
+      <input type="number" id="startingEquity" step="any">
+    </div>
+    <div class="input-group">
+      <label>Highest Recorded Balance:</label>
+      <input type="number" id="highestBalance" step="any">
+    </div>
+    <button onclick="calculateDrawdown()">Calculate</button>
+    <div class="result">
+      <p>Daily Drawdown: <span id="dailyDrawdownResult"></span></p>
+      <p>Max Drawdown: <span id="maxDrawdownResult"></span></p>
+    </div>
+  </div>
+
+  <script>
+    function calculateDrawdown() {
+      const initialBalance = parseFloat(document.getElementById("initialBalance").value);
+      const startingEquity = parseFloat(document.getElementById("startingEquity").value);
+      const highestBalance = parseFloat(document.getElementById("highestBalance").value);
+
+      const dailyDrawdown = startingEquity - (startingEquity * 0.04);
+      const maxDrawdown = (highestBalance >= initialBalance * 1.06) ? initialBalance : initialBalance - (initialBalance * 0.06);
+
+      document.getElementById("dailyDrawdownResult").textContent = "$" + dailyDrawdown.toFixed(2);
+      document.getElementById("maxDrawdownResult").textContent = "$" + maxDrawdown.toFixed(2);
+    }
+  </script>
+</body>
+</html>
